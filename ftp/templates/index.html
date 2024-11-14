@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Расписание</title>
+    </head>
+    <body>
+        <form method="POST" action="create/">
+            {% csrf_token %}
+            <table>
+                <tbody>
+                    {{ form.as_table }}
+                    <tr>
+                        <td colspan="3" align="center"><input type="submit" value="Сохранить"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        {% if schedules.count > 0 %}
+        <h2>Расписание на понедельник</h2>
+        <table>
+            <thead align="center">
+                <tr>
+                    <th width="10%">Пара</th>
+                    <th width="30%">Предмет</th>
+                    <th width="15%">Время</th>
+                    <th width="30">Преподаватель</th>
+                    <th width="45%">Действия</th>
+                </tr>
+            </thead>
+            <tbody align="center">
+                {% for sch in schedules %}
+                    <tr>
+                        <td>{{ sch.id }}</td>
+                        <td>{{ sch.name }}</td>
+                        <td>{{ sch.time }}</td>
+                        <td>{{ sch.teacher }}</td>
+                        <td><a href="edit/{{ sch.id }}">Изменить</a> | <a href="delete/{{ sch.id }}">Удалить</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </body>
+</html>
